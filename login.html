@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign In</h1>
+        <input placeholder="Enter Email" type="email" id="lemail"><br>
+        <input placeholder="Enter Password" type="password" id="lpass"><br>
+        <button id="lbtn">Sign In</button>
+        <a href="index.html">Don't have an account?</a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDTabp2Dfv--RhHO6L-4hbxdb35HbuAxd8",
+            authDomain: "bakkar-jr.firebaseapp.com",
+            projectId: "bakkar-jr",
+            storageBucket: "bakkar-jr.firebasestorage.app",
+            messagingSenderId: "89884942656",
+            appId: "1:89884942656:web:7005bafaa4cc211eb35aa5",
+            measurementId: "G-RETWEG4PT8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        document.getElementById("lbtn").addEventListener("click", function () {
+            const email = document.getElementById("lemail").value;
+            const password = document.getElementById("lpass").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then(userCredential => {
+                    alert("Login Successful!");
+                    localStorage.setItem("userEmail", userCredential.user.email);
+                    window.location.href = "home.html";
+                })
+                .catch(error => {
+                    alert("Error: " + error.message);
+                });
+        });
+    </script>
+</body>
+</html>
